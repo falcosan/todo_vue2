@@ -23,9 +23,9 @@ export default {
       items: []
     };
   },
-  // mounted(){
-  //   localStorage.getItem('storageItems') ? this.items = localStorage.getItem('storageItems').split(',') : []
-  // },
+  mounted(){
+    localStorage['storageItems'] ? this.items = JSON.parse(localStorage.getItem('storageItems')) : []
+  },
   methods: {
 		addItem () {
       if (this.newItem.value) {
@@ -34,12 +34,12 @@ export default {
         value: '',
         checked: false
       },
-        localStorage.setItem('storageItems', this.items)
+        localStorage.setItem('storageItems', JSON.stringify(this.items))
       }
 		},
     removeItem (key) {
       this.items.splice(key, 1)
-      localStorage.setItem('storageItems', this.items);
+      localStorage.setItem('storageItems',  JSON.stringify(this.items))
 		},
 		clearAll () {
 			this.items = []

@@ -16,7 +16,7 @@
 			</button>
         <button class="form-cancel row-start-2 row-end-2 col-start-2 col-end-2 m-2.5 p-2.5 rounded hover:shadow-md hover:bg-opacity-90 bg-gray-400 text-white" 
         type="button"
-        @click="$emit('clearCompleted')"
+        @click="$emit('clearAll')"
         >
 			clear
 			</button>
