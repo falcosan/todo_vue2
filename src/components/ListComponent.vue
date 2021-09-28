@@ -39,7 +39,6 @@ export default {
 		},
     removeItem (key) {
       this.items.splice(key, 1)
-      this.items[key].checked = false
       localStorage.setItem('storageItems', this.items);
 		},
 		clearAll () {
