@@ -3,7 +3,7 @@
 	<input :class="`form-input col-start-1 col-end-3 m-5 p-2.5 rounded ${valuePassed ? '' : 'bg-red-200'}`" 
         type="text" 
         placeholder="something to do" 
-        :value="inputValue !== '' ? inputValue : ''"
+        :value="inputValue"
         @keyup="checkItem"
         @input="$emit('update:inputValue', $event.target.value)"
         @keypress.enter="addItem()"

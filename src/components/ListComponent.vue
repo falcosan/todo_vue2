@@ -2,10 +2,10 @@
 <div class="list container max-w-5xl mx-auto mt-10 mb-0 overflow-hidden rounded font-mono bg-gray-100">
 	<div class="flex flex-col bg-gray-200">
 		<h1 class="list-title text-center mt-5 mb-2.5 text-3xl italic">todo today</h1>
-      <Form @addItem="addItem" @clearCompleted="clearCompleted" :input-value.sync="newItem"/>
+      <Form @addItem="addItem" @clearAll="clearAll" :input-value.sync="newItem.value"/>
     </div>
-    <ul class="list-items grid gap-2.5 py-2.5 px-5">
-      <Item v-for="(item, index) in items" :item-value="item" :key="`item-${index}`" @removeItem="removeItem(index)"/>
+    <ul class="list-items h-full py-2.5 px-5 overflow-y-scroll">
+      <Item v-for="(item, index) in items" :class="`${index === 0 ? '' : 'mt-2.5'}`" :item-value="item.value" :key="`item-${index}`" :item-check.sync="item.checked" @removeItem="removeItem(index)"/>
     </ul>
 </div>
 </template>
@@ -16,33 +16,41 @@ export default {
   components: { Form, Item },
   data() {
     return { 
-      newItem: '',
+      newItem: {
+        value: '',
+        checked: false
+      },
       items: []
     };
   },
-  mounted(){
-    localStorage.getItem('storageItems') ? this.items = localStorage.getItem('storageItems').split(',') : []
-  },
+  // mounted(){
+  //   localStorage.getItem('storageItems') ? this.items = localStorage.getItem('storageItems').split(',') : []
+  // },
   methods: {
 		addItem () {
-      if (this.newItem){
+      if (this.newItem.value) {
         this.items.push(this.newItem)
-        this.newItem = ''
+        this.newItem = {
+        value: '',
+        checked: false
+      },
         localStorage.setItem('storageItems', this.items)
       }
 		},
     removeItem (key) {
       this.items.splice(key, 1)
+      this.items[key].checked = false
       localStorage.setItem('storageItems', this.items);
 		},
-		clearCompleted () {
+		clearAll () {
 			this.items = []
+        this.newItem = {
+        value: '',
+        checked: false
+      },
+      localStorage.removeItem('storageItems');
 		}
 	}
 };
 </script>
 <style scoped>
-.list{
-  height: calc(100vh - 80px);
-}
-</style>
