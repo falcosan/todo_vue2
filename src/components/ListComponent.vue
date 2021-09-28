@@ -20,15 +20,20 @@ export default {
       items: []
     };
   },
-methods: {
+  mounted(){
+    localStorage.getItem('storageItems') ? this.items = localStorage.getItem('storageItems').split(',') : []
+  },
+  methods: {
 		addItem () {
-      if(this.newItem){
+      if (this.newItem){
         this.items.push(this.newItem)
         this.newItem = ''
+        localStorage.setItem('storageItems', this.items)
       }
 		},
     removeItem (key) {
-			this.items.splice(key, 1)
+      this.items.splice(key, 1)
+      localStorage.setItem('storageItems', this.items);
 		},
 		clearCompleted () {
 			this.items = []
