@@ -26,6 +26,9 @@ export default {
   mounted(){
     localStorage['storageItems'] ? this.items = JSON.parse(localStorage.getItem('storageItems')) : []
   },
+  updated(){
+   localStorage.setItem('storageItems', JSON.stringify(this.items))
+  },
   methods: {
 		addItem () {
       if (this.newItem.value) {
@@ -33,13 +36,11 @@ export default {
         this.newItem = {
         value: '',
         checked: false
-      },
-        localStorage.setItem('storageItems', JSON.stringify(this.items))
+      }
       }
 		},
     removeItem (key) {
       this.items.splice(key, 1)
-      localStorage.setItem('storageItems',  JSON.stringify(this.items))
 		},
 		clearAll () {
 			this.items = []
